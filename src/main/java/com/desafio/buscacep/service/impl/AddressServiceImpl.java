@@ -33,16 +33,16 @@ public class AddressServiceImpl implements AddressService {
 				.getByZipCode(zipCode)
 				.map( cep -> modelMapper.map(cep, AddressDTO.class)); 
 							
-		if (address.isEmpty()) {			
-			Optional<AddressViaCEPDTO> cep = addressSearchService.byZipCode(zipCode);
-					
-			address = Optional.of(addressDTOToCepDTO(cep));					
-		
-			if (address.isPresent()) {
-				Address entity = modelMapper.map(addressDTOToCepDTO(cep), Address.class);				
-				addressCacheService.save(entity);										
-			}
-		}
+//		if (address.isEmpty()) {			
+//			Optional<AddressViaCEPDTO> cep = addressSearchService.byZipCode(zipCode);
+//					
+//			address = Optional.of(addressDTOToCepDTO(cep));					
+//		
+//			if (address.isPresent()) {
+//				Address entity = modelMapper.map(addressDTOToCepDTO(cep), Address.class);				
+//				addressCacheService.save(entity);										
+//			}
+//		}
 		
 		return address;
 	}
