@@ -10,9 +10,9 @@ import com.desafio.buscacep.api.dto.AddressViaCEPDTO;
 
 
 @FeignClient(url= "https://viacep.com.br/ws/" , name = "viacep")
-public interface AddressSearchService {
+public interface AddressSearchService  {	
 	
 	@GetMapping("{cep}/json")
-	Optional<AddressViaCEPDTO> byZipCode(@PathVariable("cep") String cep);	
+	Optional<AddressViaCEPDTO> byZipCode(@PathVariable("cep") String cep);			
 	
 }

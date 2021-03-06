@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class AddressViaCEPDTO {
 	
+	private Boolean erro;
 	private String cep;
 	private String logradouro;
 	private String complemento;
