@@ -36,7 +36,7 @@ public class CepController {
 			@PathVariable("zipCode") 
 			@Pattern(regexp = RegexPattern.ZIP_CODE, message = "Formato inválido para o cep") 
 			String zipCode) {
-		
+				
 		Optional<AddressDTO> address = addressService.findByZipCode(zipCode);
 						
 		return address.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND) );

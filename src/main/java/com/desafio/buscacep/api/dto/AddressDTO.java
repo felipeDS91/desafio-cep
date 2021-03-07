@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddressDTO {
 		
-	private Long id;
+//	private Long id;
 	
 	@NotEmpty
 	private String zipCode;

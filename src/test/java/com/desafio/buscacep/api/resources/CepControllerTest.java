@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,9 +22,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.desafio.buscacep.api.dto.AddressDTO;
-import com.desafio.buscacep.api.model.entity.Address;
-import com.desafio.buscacep.service.AddressSearchService;
-import com.desafio.buscacep.service.AddressCacheService;
+import com.desafio.buscacep.service.AddressService;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -37,13 +34,10 @@ public class CepControllerTest {
 	
 	@Autowired
 	MockMvc mvc;
-	
-	@MockBean
-	AddressCacheService service;	
 
 	@MockBean
-	AddressSearchService addressSearchService;	
-	
+	AddressService addressService; 
+		
 	@Test
 	@DisplayName("Deve obter informações de endereço de um dado cep")
 	public void getAddressDetailsTest() throws Exception {
@@ -52,15 +46,15 @@ public class CepControllerTest {
 		
 		AddressDTO dto = createNewAddress();
 		
-		Address cep = Address.builder()					
+		Optional<AddressDTO> address = Optional.of(AddressDTO.builder()					
 					.zipCode(zipCode)
 					.street(dto.getStreet())
 					.neighborhood(dto.getNeighborhood())
 					.city(dto.getCity())
 					.state(dto.getState())
-					.build();	
+					.build());	
 		
-		BDDMockito.given( service.getByZipCode(zipCode) ).willReturn(Optional.of(cep));
+		BDDMockito.given( addressService.findByZipCode(zipCode) ).willReturn(address);
 		
 		// execucao
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -84,7 +78,7 @@ public class CepControllerTest {
 
 		String zipCode = "00000000";
 		
-		BDDMockito.given( service.getByZipCode(Mockito.anyString()) ).willReturn( Optional.empty() );
+		BDDMockito.given( addressService.findByZipCode(Mockito.anyString()) ).willReturn( Optional.empty() );
 		
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
 				.get(CEP_API.concat("/" + zipCode))

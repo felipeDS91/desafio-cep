@@ -38,8 +38,8 @@ public class AddressServiceImpl implements AddressService {
 			
 			if (cep.isPresent()) {
 				if (cep.get().getErro() == null) {					
-					address = Optional.of(addressDTOToCepDTO(cep));
-					Address entity = modelMapper.map(addressDTOToCepDTO(cep), Address.class);				
+					address = Optional.of(addressViaCEPDTOToCepDTO(cep));
+					Address entity = modelMapper.map(addressViaCEPDTOToCepDTO(cep), Address.class);				
 					addressCacheService.save(entity);										
 				}
 			}
@@ -48,7 +48,7 @@ public class AddressServiceImpl implements AddressService {
 		return address;
 	}
 	
-	private AddressDTO addressDTOToCepDTO(Optional<AddressViaCEPDTO> optional) {
+	private AddressDTO addressViaCEPDTOToCepDTO(Optional<AddressViaCEPDTO> optional) {
 		
 		return AddressDTO.builder()
 						.city(optional.get().getLocalidade())
