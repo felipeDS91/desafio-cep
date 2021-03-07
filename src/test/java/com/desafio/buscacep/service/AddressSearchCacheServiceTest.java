@@ -21,9 +21,9 @@ import com.desafio.buscacep.service.impl.AddresCacheServiceImpl;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-public class AddressCacheServiceTest {
+public class AddressSearchCacheServiceTest {
 
-	AddressCacheService service;
+	AddressSearchCacheService service;
 	
 	@MockBean
 	AddressRepository repository;
@@ -72,6 +72,8 @@ public class AddressCacheServiceTest {
 		
 		// execucao
 	  	Throwable exception = Assertions.catchThrowable( () -> service.save(cep) );
+	  	
+	  	// verficacoes
 		assertThat(exception)
 				.isInstanceOf(BusinessException.class)
 				.hasMessage("Cep já cadastrado");

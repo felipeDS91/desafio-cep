@@ -18,10 +18,10 @@ import com.desafio.buscacep.api.dto.AddressViaCEPDTO;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-public class AddressSearchServiceTest {
+public class AddressSearchAPIServiceTest {
 	
 	@MockBean
-    AddressSearchService service;	
+    AddressSearchAPIService service;	
 	
 	@Test
 	@DisplayName("Deve buscar um endereço quando de um cep válido")

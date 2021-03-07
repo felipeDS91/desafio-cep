@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.desafio.buscacep.api.model.entity.Address;
 
-public interface AddressCacheService {
+public interface AddressSearchCacheService {
 
 	Address save(Address any);
 

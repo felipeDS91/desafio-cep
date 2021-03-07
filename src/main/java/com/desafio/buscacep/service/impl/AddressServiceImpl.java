@@ -2,61 +2,49 @@ package com.desafio.buscacep.service.impl;
 
 import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.desafio.buscacep.api.dto.AddressDTO;
-import com.desafio.buscacep.api.dto.AddressViaCEPDTO;
-import com.desafio.buscacep.api.model.entity.Address;
-import com.desafio.buscacep.service.AddressSearchService;
 import com.desafio.buscacep.service.AddressService;
-import com.desafio.buscacep.service.AddressCacheService;
+import com.desafio.buscacep.service.AddressSearchService;
 
 @Service
 public class AddressServiceImpl implements AddressService {
-	
-	private AddressCacheService addressCacheService;	
-	private ModelMapper modelMapper;
-	private AddressSearchService addressSearchService;
+				
+	private AddressSearchService addressSearchService;	
 
-	public AddressServiceImpl(AddressCacheService addressCacheService, ModelMapper modelMapper, AddressSearchService addressSearchService) {		
-		this.addressCacheService = addressCacheService;
-		this.modelMapper = modelMapper;
+	public AddressServiceImpl(AddressSearchService addressSearchService) {		
 		this.addressSearchService = addressSearchService;
 	}
-	
-	
+		
 	@Override
 	public Optional<AddressDTO> findByZipCode(String zipCode) {
+				
+		Optional<AddressDTO> address = null;		
+				
+		String findZipCode = zipCode;
 		
-		Optional<AddressDTO> address = addressCacheService
-				.getByZipCode(zipCode)
-				.map( cep -> modelMapper.map(cep, AddressDTO.class)); 
-							
-		if (address.isEmpty()) {			
-			Optional<AddressViaCEPDTO> cep = addressSearchService.byZipCode(zipCode);					
+		for (int i = zipCode.length(); i >= 0; i--) {
+									
+			findZipCode = replaceCharWithZero(findZipCode, i);					
 			
-			if (cep.isPresent()) {
-				if (cep.get().getErro() == null) {					
-					address = Optional.of(addressViaCEPDTOToCepDTO(cep));
-					Address entity = modelMapper.map(addressViaCEPDTOToCepDTO(cep), Address.class);				
-					addressCacheService.save(entity);										
-				}
-			}
-		}
+			address = addressSearchService.byZipCode(findZipCode.toString());
+			
+			if (address.isPresent()) break;
+		 }
 		
+						
 		return address;
 	}
-	
-	private AddressDTO addressViaCEPDTOToCepDTO(Optional<AddressViaCEPDTO> optional) {
-		
-		return AddressDTO.builder()
-						.city(optional.get().getLocalidade())
-						.neighborhood(optional.get().getBairro())
-						.state(optional.get().getUf())
-						.street(optional.get().getLogradouro())
-						.zipCode(optional.get().getCep())
-						.build(); 						
-	}	
 
+
+	private String replaceCharWithZero(String string, int index) {
+		StringBuilder result = new StringBuilder(string);
+		
+		if (index >= 0 & index < string.length()) result.setCharAt(index, '0');		
+		
+		return result.toString();
+	}
+
+			
 }

@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import com.desafio.buscacep.api.model.entity.Address;
 import com.desafio.buscacep.exception.BusinessException;
 import com.desafio.buscacep.model.repository.AddressRepository;
-import com.desafio.buscacep.service.AddressCacheService;
+import com.desafio.buscacep.service.AddressSearchCacheService;
 
 @Service
-public class AddresCacheServiceImpl implements AddressCacheService {
+public class AddresCacheServiceImpl implements AddressSearchCacheService {
 
 	private AddressRepository repository;
 
