@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.desafio.buscacep.api.dto.AddressViaCEPDTO;
 
-
 @FeignClient(url= "https://viacep.com.br/ws/" , name = "viacep")
 public interface AddressSearchService  {	
 	

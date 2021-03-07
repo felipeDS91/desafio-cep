@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressDTO {
-		
-//	private Long id;
+public class AddressDTO {		
 	
 	@NotEmpty
 	private String zipCode;

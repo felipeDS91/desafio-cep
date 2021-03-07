@@ -1,4 +1,4 @@
-package com.desafio.buscacep.api.resource;
+package com.desafio.buscacep.api.controller;
 
 import java.util.Optional;
 
