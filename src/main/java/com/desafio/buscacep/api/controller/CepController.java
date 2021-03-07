@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +20,14 @@ import com.desafio.buscacep.api.dto.AddressDTO;
 import com.desafio.buscacep.core.RegexPattern;
 import com.desafio.buscacep.service.AddressService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @Validated
 @RequestMapping("/api/cep")
+@Api(value = "API REST Busca cep")
+@CrossOrigin(origins = "*")
 public class CepController {
 	
 
@@ -32,6 +38,7 @@ public class CepController {
 	}
 		
 	@GetMapping("{zipCode}")
+	@ApiOperation(value = "Retorna um endereço")
 	public AddressDTO get(
 			@PathVariable("zipCode") 
 			@Pattern(regexp = RegexPattern.ZIP_CODE, message = "Formato inválido para o cep") 
